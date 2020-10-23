@@ -41,6 +41,11 @@ local.properties
 *.user
 *.sln.docstates
 
+# dir
+Adafruit_CircuitPython_AMG88xx-master/
+
+
+
 # Build results
 
 [Dd]ebug/
