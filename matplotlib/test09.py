@@ -150,7 +150,7 @@ for i in range(200000):
     ax.imshow(F.piexls)
     ax.set_title("frame {}".format(i))
     # Note that using time.sleep does *not* work here!
-    plt.pause(0.05)
+    plt.pause(0.01)
 
 
 # print(T.pointList)

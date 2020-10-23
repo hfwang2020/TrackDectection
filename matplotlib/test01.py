@@ -27,7 +27,7 @@ for i in range(100000):
     data[i] = piexls
     piexls.resize(8, 8)
     print(str(piexls.max()) + " " + str(piexls.min()) + " " + "温差：" + str(piexls.max() - piexls.min())+"平均："+str(np.mean(piexls)))
-    ax.imshow(piexls, vmin=20, vmax=25)
+    ax.imshow(piexls)
     # ax.imshow(piexls, cmap="gray", vmin=20, vmax=35)
     # ax.imshow(data[i])
     ax.set_title("frame {}".format(i))
