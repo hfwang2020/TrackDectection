@@ -1,4 +1,5 @@
 # 实时测试
+# mlx90641
 import matplotlib.pyplot as plt
 import numpy as np
 import paho.mqtt.subscribe as subscribe
@@ -11,7 +12,7 @@ def receiveMqtt():
     msg = subscribe.simple("test", hostname="192.168.1.120")
     msg = str(msg.payload)
     msg_list = msg.split(sep=",")
-    msg_list = msg_list[1:65]
+    msg_list = msg_list[1:193]
     piexls = []
     for i in msg_list:
         piexls.append(float(i))
@@ -24,10 +25,10 @@ fig, ax = plt.subplots()
 for i in range(100000):
     ax.cla()
     piexls = receiveMqtt()
-    data[i] = piexls
-    piexls.resize(8, 8)
+    # data[i] = piexls
+    piexls.resize(12,16)
     print(str(piexls.max()) + " " + str(piexls.min()) + " " + "温差：" + str(piexls.max() - piexls.min())+"平均："+str(np.mean(piexls)))
-    ax.imshow(piexls)
+    ax.imshow(piexls,vmin=20,vmax=30)
     # ax.imshow(piexls, cmap="gray", vmin=20, vmax=35)
     # ax.imshow(data[i])
     ax.set_title("frame {}".format(i))
