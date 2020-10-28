@@ -5,8 +5,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 import paho.mqtt.subscribe as subscribe
 
-np.random.seed(19971111)
-data = np.random.random((100000, 64))
 data01 = np.load("../Dataset/data01.npy")
 
 
@@ -26,13 +24,37 @@ class Frame():
     def __init__(self, piexls):
         # piexls 12x16 np数组
         self.piexls = piexls
-        self.col = self.colcal()
+        self.col_mean = self.colmean()
+        self.col_media = self.colmedia()
+        self.col_diff = self.diff()
 
-    def colcal(self):
+    def colmean(self):
         piexls = self.piexls
-        col = np.zeros((2, 16))
+        col_mean = np.ones(16)
         for i in range(16):
-            col[:, i] = piexls[:, i].mean()
+            col_mean[i] = piexls[:, i].mean()
+        return col_mean
+
+    def colmedia(self):
+        piexls = self.piexls
+        col_media = np.ones(16)
+        for i in range(16):
+            col_media[i] = np.median(piexls[:, i])
+            # col_media[i] = piexls[:, i].median()
+        return col_media
+
+    def diff(self):
+        col = self.col_mean
+        # col = self.col_media
+        col_diff = np.ones(16)
+        col_diff[0] = 4 * col[0] - col[1] - col[2] - col[7] - col[8];
+        col_diff[1] = 4 * col[1] - col[2] - col[3] - col[7] - col[8];
+        col_diff[14] = 4 * col[14] - col[12] - col[13] - col[7] - col[8];
+        col_diff[15] = 4 * col[15] - col[14] - col[13] - col[7] - col[8];
+        for i in range(2, 14):
+            col_diff[i] = 4 * col[i % 16] - col[(i + 1) % 16] - col[(i - 1) % 16] - col[(i + 2) % 16] - col[
+                (i - 2) % 16]
+        return col_diff
 
 
 class Track():
@@ -47,17 +69,19 @@ class Track():
         self.num = 5
         # 室内人数
 
-
 fig, ax = plt.subplots()
-col = np.zeros((2, 16))
+col = np.ones(16)
 for i in range(100000):
     ax.cla()
-    piexls = data01[i]
-    # piexls = receiveMqtt()
-    # piexls.resize(12, 16)
-    for a in range(16):
-        col[:, a] = piexls[:, a].mean()
-    ax.imshow(col, vmin=20, vmax=30)
+    # piexls = data01[i]
+    piexls = receiveMqtt()
+    piexls.resize(12, 16)
+    F = Frame(piexls)
+    col = F.col_diff
+    col_img = col.copy()
+    col_img.resize(1, 16)
+    # ax.imshow(col_img, vmin=20, vmax=30)
+    ax.imshow(col_img, vmin=2, vmax=8)
     # ax.imshow(piexls, cmap="gray", vmin=20, vmax=35)
     # ax.imshow(data[i])
     ax.set_title("frame {}".format(i))
