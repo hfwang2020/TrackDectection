@@ -28,7 +28,8 @@ class Frame():
         self.col_mean = self.colmean()
         self.col_media = self.colmedia()
         self.col_diff = self.diff()
-        self.index = self.index()
+        self.index = self.points_index()
+
     def colmean(self):
         piexls = self.piexls
         col_mean = np.ones(16)
@@ -59,18 +60,15 @@ class Frame():
         # col_diff[-1] = 0
         return col_diff
 
-    def point_one(self):
-        col = self.col_diff
-        one_index = col.index(max(col))
-        return one_index
-
     def points_index(self):
         col = self.col_diff
-        index_list = list
+        index_list = []
+        # 列表极大值
         for i in range(2, 14):
-            if (col[i] > col[i - 1] and col[i] > col[i + 1]):
+            if (col[i] > col[i - 1] and col[i] > col[i + 1]) and (col[i] > 2):
                 index_list.append(i)
         return index_list
+
 
 class Track():
     def __init__(self):
@@ -87,12 +85,13 @@ class Track():
 
 fig, ax = plt.subplots()
 col = np.ones(16)
-for i in range(100000):
+for i in range(200, 10000):
     ax.cla()
-    # piexls = data01[i]
-    piexls = receiveMqtt()
-    piexls.resize(12, 16)
+    piexls = data01[i]
+    # piexls = receiveMqtt()
+    # piexls.resize(12, 16)
     F = Frame(piexls)
+    print(F.index)
     col = F.col_diff
     col_img = col.copy()
     col_img.resize(1, 16)
