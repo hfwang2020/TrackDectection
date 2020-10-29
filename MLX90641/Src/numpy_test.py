@@ -9,6 +9,9 @@ col = np.ones(16)
 # for i in range(16):
 #     col[i] = b[:, i].mean()
 
+
+for i in range(2,14):
+    print(i)
 np.media
 print(b)
 print(col)
