@@ -4,6 +4,7 @@ import numpy as np
 import paho.mqtt.subscribe as subscribe
 import time
 
+
 def receiveMqtt():
     msg = subscribe.simple("test", hostname="192.168.1.120")
     msg = str(msg.payload)
@@ -16,9 +17,9 @@ def receiveMqtt():
     return piexls1
 
 
-data = np.random.random((400,12,16))
+data = np.random.random((500, 12, 16))
 
-for i in range():
+for i in range(500):
     piexls = receiveMqtt()
     piexls.resize(12, 16)
     data[i] = piexls
@@ -26,8 +27,7 @@ for i in range():
 
 
 # 单人通过数据
-np.save('../Dataset/data01.npy',data)
-
+np.save('../Dataset/data02.npy', data)
 
 # 双人通过数据
 # np.save("../Dataset/data02.npy",data)

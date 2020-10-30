@@ -28,7 +28,8 @@ class Frame():
         self.col_mean = self.colmean()
         self.col_media = self.colmedia()
         self.col_diff = self.diff()
-        self.index = self.points_index()
+        self.index_list = self.points_index()
+        self.index = np.mean(self.index_list)
 
     def colmean(self):
         piexls = self.piexls
@@ -63,10 +64,19 @@ class Frame():
     def points_index(self):
         col = self.col_diff
         index_list = []
-        # 列表极大值
+        # 列表极大点和差值大于2的点列坐标 -> 异常点
         for i in range(2, 14):
-            if (col[i] > col[i - 1] and col[i] > col[i + 1]) and (col[i] > 2):
+            if ((col[i] > col[i - 1] and col[i] > col[i + 1]) and (col[i] > 2)):
                 index_list.append(i)
+        # 当前帧无异常点，返回 -1
+        # print(index_list)
+        if index_list.__len__() == 0:
+            index_list.append(-1)
+        if index_list.__len__() <= 3:
+            if abs(index_list[0] - index_list[-1]) <= 5:
+                index_list = [np.mean(index_list)]
+        # if index_list.__len__()
+
         return index_list
 
 
@@ -87,11 +97,12 @@ fig, ax = plt.subplots()
 col = np.ones(16)
 for i in range(200, 10000):
     ax.cla()
-    piexls = data01[i]
-    # piexls = receiveMqtt()
-    # piexls.resize(12, 16)
+    # piexls = data01[i]
+    piexls = receiveMqtt()
+    piexls.resize(12, 16)
     F = Frame(piexls)
-    print(F.index)
+    if not(int(F.index) == -1):
+        print(F.index)
     col = F.col_diff
     col_img = col.copy()
     col_img.resize(1, 16)
