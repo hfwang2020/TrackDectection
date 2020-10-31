@@ -1,6 +1,8 @@
 # 计算每一列的平均值展示
 # 基于"data01.npy" 200farme有人
 # mlx90641
+# 单人检测v0.1
+
 import matplotlib.pyplot as plt
 import numpy as np
 import paho.mqtt.subscribe as subscribe
@@ -29,7 +31,8 @@ class Frame():
         self.col_media = self.colmedia()
         self.col_diff = self.diff()
         self.index_list = self.points_index()
-        self.index = np.mean(self.index_list)
+        self.index = self.index_list_to_index()
+        # self.index = np.mean(self.index_list)
 
     def colmean(self):
         piexls = self.piexls
@@ -61,6 +64,7 @@ class Frame():
         # col_diff[-1] = 0
         return col_diff
 
+    # 可以改进的地方加入list里面值的权重
     def points_index(self):
         col = self.col_diff
         index_list = []
@@ -68,16 +72,23 @@ class Frame():
         for i in range(2, 14):
             if ((col[i] > col[i - 1] and col[i] > col[i + 1]) and (col[i] > 2)):
                 index_list.append(i)
-        # 当前帧无异常点，返回 -1
-        # print(index_list)
-        if index_list.__len__() == 0:
-            index_list.append(-1)
-        if index_list.__len__() <= 3:
-            if abs(index_list[0] - index_list[-1]) <= 5:
-                index_list = [np.mean(index_list)]
-        # if index_list.__len__()
-
         return index_list
+        # 当前帧无异常点，返回 -1
+
+    def index_list_to_index(self):
+        index_list = self.index_list
+        index = -1
+        if index_list.__len__() == 0:
+            index = -1
+        else:
+            index = np.mean(index_list)
+        # 双人算法优化index
+        # elif index_list.__len__() == 3:
+        #     if abs(index_list[0] - index_list[-1]) <= 5:
+        #         index = np.mean(index_list)
+        # else:
+        #     index = np.mean(index_list)
+        return index
 
 
 class Track():
@@ -88,21 +99,51 @@ class Track():
         # -1:  out
         self.pointList = [0]
         # 轨迹行数列表
-        self.exist = 0  # 当前处于有效轨迹中
         self.num = 0
+        self.diff = 0
         # 室内人数
 
+    def judge(self):
+        list = self.pointList
+        diff = self.diff
+        # 每两帧之间的diff
+        piexls_diff = list[-1] - list[-2]
+        if piexls_diff > 10:
+            piexls_diff = 0
+        if list.__len__() >= 3:
+            diff += piexls_diff
+        if diff > 7:
+            print(diff)
+            diff = 0
+            self.flag = 1
+            self.pointList = [0]
+            self.num += self.flag
+            print("进1人", self.num)
+        elif diff < -7:
+            diff = 0
+            self.flag = -1
+            self.pointList = [0]
+            self.num += self.flag
+            print("出1人", self.num)
+        self.diff = diff
+
+
+T = Track()
 
 fig, ax = plt.subplots()
 col = np.ones(16)
-for i in range(200, 10000):
+for i in range(250, 10000):
     ax.cla()
-    # piexls = data01[i]
-    piexls = receiveMqtt()
-    piexls.resize(12, 16)
+    piexls = data01[i]
+    # piexls = receiveMqtt()
+    # piexls.resize(12, 16)
     F = Frame(piexls)
-    if not(int(F.index) == -1):
-        print(F.index)
+    if not (int(F.index) == -1):
+        if not (F.index == T.pointList[-1]):
+            T.pointList.append(F.index)
+            T.judge()
+            print(T.pointList, "\t", "diff: ", T.diff)
+
     col = F.col_diff
     col_img = col.copy()
     col_img.resize(1, 16)
@@ -112,6 +153,6 @@ for i in range(200, 10000):
     # ax.imshow(data[i])
     ax.set_title("frame {}".format(i))
     # Note that using time.sleep does *not* work here!
-    plt.pause(0.01)
+    plt.pause(0.2)
 #
 # np.save("data01.npy",data)
