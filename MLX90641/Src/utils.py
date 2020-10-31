@@ -10,3 +10,4 @@ def receiveMqtt():
         piexls.append(float(i))
     piexls1 = np.array(piexls)
     return piexls1
+    

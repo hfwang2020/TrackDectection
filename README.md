@@ -1,4 +1,6 @@
 # amg8833
+# mlx90641
 
-
-- keyword: amg8833,mqtt,arduino
+- 利用红外模组采集人的轨迹判断室内人数
+- sensor -> *i2c* -> arduino -> *mqtt* -> rasipi_mqtt_server -> Dectection
+- keyword: amg8833,mqtt,arduino,mlx90641
