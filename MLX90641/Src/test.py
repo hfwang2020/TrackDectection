@@ -7,5 +7,4 @@ def judge(pointList):
     print("diff: ", diff)
 
 
-pointList = [1,2,3,4,5,6]
-
+pointList = [1, 2, 3, 4, 5, 6]

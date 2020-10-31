@@ -23,11 +23,11 @@ for i in range(500):
     piexls = receiveMqtt()
     piexls.resize(12, 16)
     data[i] = piexls
-    time.delay(0.05)
+    time.sleep(0.05)
 
 
 # 单人通过数据
-np.save('../Dataset/data02.npy', data)
+np.save('../Dataset/data03.npy', data)
 
 # 双人通过数据
 # np.save("../Dataset/data02.npy",data)
