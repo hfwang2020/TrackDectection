@@ -1,6 +1,6 @@
 # 计算每一列的平均值展示
 # 基于"data01.npy" 200farme有人
-# mlx90641
+# mlx90641 12x16 8hz
 # 单人检测v0.2
 # 较v0.1加入index权重
 
@@ -12,14 +12,15 @@ from Frame import Frame
 from Track import Track
 from utils import *
 
-data01 = np.load("/home/hfwang/Desktop/DeV/VsCoDe/TrackDectection/MLX90641/Dataset/data02.npy")
+data01 = np.load("/home/hfwang/Desktop/DeV/VsCoDe/TrackDectection/MLX90641/Dataset/data03.npy")
 
+# print(data01.shape)
 
 T = Track()
-
+debug_index_list = []
 fig, ax = plt.subplots()
 col = np.ones(16)
-for i in range(0, 10000):
+for i in range(40, 500):
     ax.cla()
     piexls = data01[i]
     # piexls = receiveMqtt()
@@ -27,9 +28,10 @@ for i in range(0, 10000):
     F = Frame(piexls)
     if F.index > 0:
         if not (F.index == T.pointList[-1]):
+            debug_index_list.append(F.index)
             T.pointList.append(F.index)
             T.judge()
-            print(T.pointList, "\t", "diff: ", T.diff)
+            # print(T.pointList, "\t", "diff: ", T.diff)
 
     col = F.col_diff
     col_img = col.copy()
@@ -38,4 +40,6 @@ for i in range(0, 10000):
     ax.imshow(col_img, vmin=2, vmax=5)
     # ax.imshow(piexls, cmap="gray", vmin=20, vmax=35)
     ax.set_title("frame {}".format(i))
-    plt.pause(0.1)
+    plt.pause(0.5)
+
+print(debug_index_list)

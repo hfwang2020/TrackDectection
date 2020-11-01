@@ -38,8 +38,9 @@ class Frame():
         col_diff[14] = abs(4 * col[14] - col[12] - col[13] - 2 * self.piexls_mean)
         col_diff[15] = abs(4 * col[15] - col[14] - col[13] - 2 * self.piexls_mean)
         for i in range(2, 14):
-            col_diff[i] = abs(4 * col[i % 16] - col[(i + 1) % 16] - col[(i - 1) % 16] - col[(i + 2) % 16] - col[
-                (i - 2) % 16])
+            # col_diff[i] = abs(4 * col[i % 16] - col[(i + 1) % 16] - col[(i - 1) % 16] - col[(i + 2) % 16] - col[
+            #     (i - 2) % 16])
+            col_diff[i] = abs(col[i%16]-col[(i+2)%16])+abs(col[i%16]-col[(i-1)%16])+abs(col[i%16]-col[(i-2)%16])+abs(col[i%16]-col[(i+1)%16])
         # col_diff[0] = 0
         # col_diff[-1] = 0
         return col_diff
@@ -72,10 +73,18 @@ class Frame():
         return index
 
     def indexCal(self):
+        # 计算当前col_diff中值大于4的点的个数 一个点以下返回-1
+        # 其他情况index值为代入权值的col：sum(col*col[i])/sum(col[i])
         col_list = self.col_diff
         index = -1
         # print(col_list)
-        if max(col_list) <= 4:
+        count_above_4 = 0
+        # print(np.max(col_list))
+        for i in col_list:
+            if i > 4:
+                count_above_4 += 1
+        print(np.max(col_list),count_above_4)
+        if count_above_4 <= 1:
             return index
         col = 0
         sum1 = 0
