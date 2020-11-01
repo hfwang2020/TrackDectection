@@ -7,12 +7,12 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import paho.mqtt.subscribe as subscribe
-import matplotlib; matplotlib.use('TkAgg')
-from Frame import Frame
+# import matplotlib; matplotlib.use('TkAgg')
 from Track import Track
+from Frame import Frame
 from utils import *
 
-data01 = np.load("/home/hfwang/Desktop/DeV/VsCoDe/TrackDectection/MLX90641/Dataset/data03.npy")
+data01 = np.load("../Dataset/data03.npy")
 
 # print(data01.shape)
 
