@@ -25,7 +25,7 @@ fig, ax = plt.subplots()
 fig1,bx = plt.subplots()
 
 col = np.ones(16)
-for i in range(0, 500):
+for i in range(100, 500):
     ax.cla()
     bx.cla()
     piexls = data01[i]
@@ -40,7 +40,7 @@ for i in range(0, 500):
             # print(T.pointList, "\t", "diff: ", T.diff)
 
     # col = F.col_diff
-    col = F.debug_show
+    col = F.col_var
     col_img = col.copy()
     col_img.resize(1, 16)
     # ax.imshow(col_img, vmin=20, vmax=30)
@@ -49,6 +49,6 @@ for i in range(0, 500):
     # ax.imshow(piexls, cmap="gray", vmin=20, vmax=35)
     ax.set_title("frame {}".format(i))
     bx.set_title("piexls {}".format(i))
-    plt.pause(0.1)
+    plt.pause(0.3)
 
 print(debug_index_list)

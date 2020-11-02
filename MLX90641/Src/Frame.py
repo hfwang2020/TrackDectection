@@ -9,9 +9,11 @@ class Frame():
         self.col_mean = self.colmean()
         self.col_media = self.colmedia()
         self.col_diff = self.diff()
-        self.index_list = self.points_index()
-        self.index = self.indexCal()
-        self.debug_show = self.colCal_2()
+        
+        self.col_var = self.colCal_2()
+        self.index = self.indexCal_1()
+        self.index_list = self.indexCal_2()
+        print(self.index_list)
         # self.index = self.index_list_to_index()
         # self.index = np.mean(self.index_list)
 
@@ -102,6 +104,68 @@ class Frame():
             col += 1
         index = sum1 / sum2
         return round(index, 2)
+    
+    def indexCal_1(self):
+        # 计算当前col_diff中值大于4的点的个数 一个点以下返回-1
+        # 其他情况index值为代入权值的col：sum(col*col[i])/sum(col[i])
+        col_list = self.col_var
+        index = -1
+        # print(col_list)
+        count_above_1 = 0
+        # print(np.max(col_list))
+        for i in col_list:
+            if i > 1:
+                count_above_1 += 1
+        
+        if count_above_1 <= 1:
+            return index
+        col = 0
+        sum1 = 0
+        sum2 = 0
+        for i in col_list:
+            sum2 += i
+            sum1 += col * i
+            col += 1
+        index = sum1 / sum2
+        return round(index, 2)
+
+    # 双人index
+    def indexCal_2(self):
+        col_list = self.col_var
+        index = []
+        count_above_1 = 0
+        for i in range(16):
+            if col_list[i] >= 1:
+                count_above_1 += 1
+            else :
+                col_list[i] = -1   
+        if count_above_1 <= 1:
+            return [-1,-1]
+    
+        i = 0
+        sum_i = 0
+        sum_temp = 0
+        
+        while(i<16):
+            if col_list[i]>0:
+                sum_temp = 0
+                sum_i = 0
+                while(col_list[i]>0):
+                    sum_i += i*col_list[i]
+                    sum_temp+=col_list[i]
+                    i += 1
+                index.append(sum_i/sum_temp)
+            else:
+                i += 1
+
+        return index
+        
+
+
+             
+    
+
+
 
     # debug1
     def colCal_1(self):
@@ -112,7 +176,7 @@ class Frame():
             col[i] = 4*abs(col_mean[i] - piexls_mean)
         return col
 
-    # debug2
+    # debug2 方差
     def colCal_2(self):
         piexls = self.piexls
         b=np.ones(16)
