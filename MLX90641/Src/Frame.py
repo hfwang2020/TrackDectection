@@ -11,6 +11,7 @@ class Frame():
         self.col_diff = self.diff()
         self.index_list = self.points_index()
         self.index = self.indexCal()
+        self.debug_show = self.colCal_2()
         # self.index = self.index_list_to_index()
         # self.index = np.mean(self.index_list)
 
@@ -40,7 +41,10 @@ class Frame():
         for i in range(2, 14):
             # col_diff[i] = abs(4 * col[i % 16] - col[(i + 1) % 16] - col[(i - 1) % 16] - col[(i + 2) % 16] - col[
             #     (i - 2) % 16])
-            col_diff[i] = abs(col[i%16]-col[(i+2)%16])+abs(col[i%16]-col[(i-1)%16])+abs(col[i%16]-col[(i-2)%16])+abs(col[i%16]-col[(i+1)%16])
+            col_diff[i] = abs(col[i%16]-col[(i+2)%16])
+            +abs(col[i%16]-col[(i-1)%16])
+            +abs(col[i%16]-col[(i-2)%16])
+            +abs(col[i%16]-col[(i+1)%16])
         # col_diff[0] = 0
         # col_diff[-1] = 0
         return col_diff
@@ -83,9 +87,12 @@ class Frame():
         for i in col_list:
             if i > 4:
                 count_above_4 += 1
-        print(np.max(col_list),count_above_4)
+        
         if count_above_4 <= 1:
             return index
+        else:
+            print(np.max(col_list),count_above_4)
+
         col = 0
         sum1 = 0
         sum2 = 0
@@ -95,3 +102,20 @@ class Frame():
             col += 1
         index = sum1 / sum2
         return round(index, 2)
+
+    # debug1
+    def colCal_1(self):
+        piexls_mean = self.piexls_mean
+        col_mean = self.col_mean
+        col = np.ones(16)
+        for i in range(16):
+            col[i] = 4*abs(col_mean[i] - piexls_mean)
+        return col
+
+    # debug2
+    def colCal_2(self):
+        piexls = self.piexls
+        b=np.ones(16)
+        for i in range(16):
+            b[i] = round(np.var(piexls[:,i]),2)
+        return b
