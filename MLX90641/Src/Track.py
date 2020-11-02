@@ -41,4 +41,4 @@ class Track():
             print("diff: ", diff, "出1人", self.num)
         self.diff = diff
         self.pointList = list
-        print(list)
+        # print(list)

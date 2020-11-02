@@ -140,7 +140,7 @@ class Frame():
             else :
                 col_list[i] = -1   
         if count_above_1 <= 1:
-            return [-1,-1]
+            return [-1]
     
         i = 0
         sum_i = 0
@@ -150,22 +150,17 @@ class Frame():
             if col_list[i]>0:
                 sum_temp = 0
                 sum_i = 0
-                while(col_list[i]>0):
+                while(col_list[i]>0 ):
                     sum_i += i*col_list[i]
                     sum_temp+=col_list[i]
                     i += 1
+                    if i == 16:
+                        break
                 index.append(sum_i/sum_temp)
             else:
                 i += 1
 
         return index
-        
-
-
-             
-    
-
-
 
     # debug1
     def colCal_1(self):
