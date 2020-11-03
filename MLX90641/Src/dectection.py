@@ -45,11 +45,10 @@ for i in range(150, 500):
     col_img = col.copy()
     col_img.resize(1, 16)
 
-    ax.imshow(col_img, vmin=0.3, vmax=0.8)
+    ax.imshow(col_img, vmin=2, vmax=5)
     bx.imshow(piexls)
-
-    print("frame", i, F.index_list)
-    # ax.imshow(piexls, cmap="gray", vmin=20, vmax=35)
+    if F.index > 0:
+        print("frame", i, F.index_list)
     ax.set_title("frame {}".format(i))
     bx.set_title("piexls {}".format(i))
     plt.pause(0.5)
