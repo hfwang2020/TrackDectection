@@ -5,9 +5,21 @@ class Frame:
     def __init__(self, piexls):
         # piexls 12x16 np数组
         self.piexls = piexls
+        self.mean = np.mean(piexls)
+        self.col_mean = self.colmean()
+        self.col_diff = self.colCal_1()
         self.col_var = self.colCal_2()
-        self.index = self.indexCal_1()
+        self.col_final = self.col_diff.copy() + self.col_var.copy()
+        # # self.index = self.indexCal_1()
         self.index_list = self.indexCal_2()
+        self.index = np.mean(self.index_list)
+
+    def colmean(self):
+        piexls = self.piexls
+        col_mean = np.ones(16)
+        for i in range(16):
+            col_mean[i] = piexls[:, i].mean()
+        return col_mean
 
     def indexCal_1(self):
         # 计算当前col_diff中值大于4的点的个数 一个点以下返回-1
@@ -35,7 +47,7 @@ class Frame:
 
     # 双人index
     def indexCal_2(self):
-        col_list = self.col_var
+        col_list = self.col_final.copy()
         index = []
         count_above_1 = 0
         for i in range(16):
@@ -46,8 +58,7 @@ class Frame:
         if count_above_1 <= 1:
             return [-1]
         i = 0
-        sum_i = 0
-        sum_temp = 0
+
         while i < 16:
             if col_list[i] > 0:
                 sum_temp = 0
@@ -61,21 +72,14 @@ class Frame:
                     if i == 16:
                         break
                 if count_temp >= 2:
-                    index.append(sum_i / sum_temp)
-                # else:
-                #     return [-1]
+                    index.append(round(sum_i / sum_temp, 1))
             else:
                 i += 1
         return index
 
-    #
-    def indexCal_3(self):
-        col_list = self.col_var
-        index = [-1, -1]
-
     # debug1
     def colCal_1(self):
-        piexls_mean = self.piexls_mean
+        piexls_mean = self.mean
         col_mean = self.col_mean
         col = np.ones(16)
         for i in range(16):
