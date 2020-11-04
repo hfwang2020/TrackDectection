@@ -16,7 +16,5 @@ import numpy as np
 # print(b)
 # print(col)
 # print(col[0])
-a = [1, 2]
-a = np.load("../Dataset/sample02.npy")
-
-print(a.shape)
+track_list = [[]]
+print(track_list.__len__())

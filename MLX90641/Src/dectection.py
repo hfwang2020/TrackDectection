@@ -23,33 +23,44 @@ data01 = np.load("../Dataset/data03.npy")
 T = Track()
 debug_index_list = []
 fig, ax = plt.subplots()
-# fig1, bx = plt.subplots()
+fig1, bx = plt.subplots()
 
 col = np.ones(16)
-for i in range(150, 170):
+for i in range(150, 2000):
 
     ax.cla()
-    # bx.cla()
-    piexls = data01[i]
-    # piexls = receiveMqtt()
-    # piexls.resize(12, 16)
+    bx.cla()
+
+    # piexls = data01[i]
+
+    piexls = receiveMqtt()
+    piexls.resize((12, 16))
+
     F = Frame(piexls)
     if F.index > 0:
-        if not (F.index == T.pointList[-1]):
+        T.empty = 0
+        if not (F.index_list == T.pointList[-1]):
             T.pointList.append(F.index_list)
-            T.judge()
-            # print(T.pointList, "\t", "diff: ", T.diff)
 
-    col = F.col_var
+        # print(T.pointList, "\t", "diff: ", T.diff)
+    else:
+        # print(T.empty)
+        T.empty += 1
+
+    if (T.empty >= 5) and (T.pointList.__len__() >= 3):
+        T.judge()
+        T.pointList = [[]]
+        T.empty = 0
+
+    col = F.col_final
     col_img = col.copy()
     col_img.resize(1, 16)
 
     ax.imshow(col_img, vmin=5, vmax=10)
-    # bx.imshow(piexls)
-    if np.mean(F.index_list) > 0:
-        print("frame", i, F.index_list)
+    bx.imshow(piexls)
+
     ax.set_title("frame {}".format(i))
-    # bx.set_title("piexls {}".format(i))
-    plt.pause(0.1)
+    bx.set_title("piexls {}".format(i))
+    plt.pause(0.01)
 
 print(debug_index_list)

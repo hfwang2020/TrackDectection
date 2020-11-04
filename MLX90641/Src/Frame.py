@@ -5,7 +5,7 @@ class Frame:
     def __init__(self, piexls):
         # piexls 12x16 np数组
         self.piexls = piexls
-        self.mean = np.mean(piexls)
+        self.mean = float(np.mean(piexls))
         self.col_mean = self.colmean()
         self.col_diff = self.colCal_1()
         self.col_var = self.colCal_2()
@@ -48,22 +48,22 @@ class Frame:
     # 双人index
     def indexCal_2(self):
         col_list = self.col_final.copy()
-        index = []
+        index = [-1]
         count_above_1 = 0
         for i in range(16):
-            if col_list[i] >= 5:
+            if col_list[i] >= 10:
                 count_above_1 += 1
             else:
                 col_list[i] = -1
         if count_above_1 <= 1:
             return [-1]
         i = 0
-
         while i < 16:
             if col_list[i] > 0:
                 sum_temp = 0
                 sum_i = 0
                 count_temp = 0
+                index = []
                 while col_list[i] > 0:
                     count_temp += 1
                     sum_i += i * col_list[i]
@@ -73,6 +73,7 @@ class Frame:
                         break
                 if count_temp >= 2:
                     index.append(round(sum_i / sum_temp, 1))
+
             else:
                 i += 1
         return index
