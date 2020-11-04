@@ -1,0 +1,14 @@
+frame 151 [13.6]
+frame 323 [14.5]
+judge running
+出去 0 人
+frame 391 [10.5]
+frame 395 [9.3]
+frame 396 [7.6]
+frame 397 [6.5]
+frame 399 [5.4]
+frame 400 [2.5]
+frame 401 [1.5]
+judge running
+出去 -1 人
+frame 685 [13.6]

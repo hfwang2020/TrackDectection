@@ -18,7 +18,7 @@ class Frame:
         piexls = self.piexls
         col_mean = np.ones(16)
         for i in range(16):
-            col_mean[i] = piexls[:, i].mean()
+            col_mean[i] = np.mean(piexls[:, i])
         return col_mean
 
     def indexCal_1(self):
