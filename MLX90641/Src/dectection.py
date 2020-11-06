@@ -16,7 +16,7 @@ from utils import *
 matplotlib.use('TkAgg')
 
 # data01 = np.load("/home/hfwang/Desktop/DeV/VsCoDe/TrackDectection/MLX90641/Dataset/data03.npy")
-# data01 = np.load("../Dataset/data03.npy")
+data01 = np.load("../Dataset/data03.npy")
 
 # print(data01.shape)
 
