@@ -22,19 +22,20 @@ data01 = np.load("../Dataset/data03.npy")
 
 T = Track()
 debug_index_list = []
+
 # fig, ax = plt.subplots()
 # fig1, bx = plt.subplots()
 
 col = np.ones(16)
-for i in range(0, 20000000):
+for i in range(155, 20000000):
 
     # ax.cla()
     # bx.cla()
 
-    # piexls = data01[i]
+    piexls = data01[i]
 
-    piexls = receiveMqtt()
-    piexls.resize((12, 16))
+    # piexls = receiveMqtt()
+    # piexls.resize((12, 16))
 
     F = Frame(piexls)
     if F.index > 0:
@@ -53,15 +54,16 @@ for i in range(0, 20000000):
         T.pointList = [[]]
         T.empty = 0
 
-    col = F.col_final
-    col_img = col.copy()
-    col_img.resize(1, 16)
 
-    # ax.imshow(col_img, vmin=5, vmax=10)
+    # col = F.col_final
+    # col_img = col.copy()
+    # col_img.resize(1, 16)
+    #
+    # ax.imshow(col_img, vmin=4, vmax=7)
     # bx.imshow(piexls)
 
     # ax.set_title("frame {}".format(i))
     # bx.set_title("piexls {}".format(i))
-    plt.pause(0.01)
+    # plt.pause(0.01)
 
 print(debug_index_list)

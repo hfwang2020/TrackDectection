@@ -44,6 +44,7 @@ class Track:
             count = 0
             for list in track_list:
                 if (list[0]>8) and (list[-1]<8) :
+                    print(list)
                     count += 1
             print("出去",count*flag,"人")
 
@@ -70,6 +71,7 @@ class Track:
             count = 0
             for list in track_list:
                 if (list[0] < 8) and (list[-1] > 8):
+                    print(list)
                     count += 1
             print("进来", count * flag, "人")
 

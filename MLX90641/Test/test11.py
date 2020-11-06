@@ -6,7 +6,7 @@ import paho.mqtt.subscribe as subscribe
 
 np.random.seed(19971111)
 data = np.random.random((100000, 64))
-data01 = np.load("../Dataset/data04.npy")
+data01 = np.load("../Dataset/data03.npy")
 
 def receiveMqtt():
     msg = subscribe.simple("test", hostname="192.168.1.120")
@@ -23,6 +23,7 @@ def receiveMqtt():
 fig, ax = plt.subplots()
 
 for i in range(100000):
+    i = 160
     ax.cla()
     piexls = data01[i]
     # piexls = receiveMqtt()

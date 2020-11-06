@@ -48,10 +48,10 @@ class Frame:
     # 双人index
     def indexCal_2(self):
         col_list = self.col_final.copy()
-        index = [-1]
+        index = []
         count_above_1 = 0
         for i in range(16):
-            if col_list[i] >= 10:
+            if col_list[i] >= 7:
                 count_above_1 += 1
             else:
                 col_list[i] = -1
@@ -63,7 +63,7 @@ class Frame:
                 sum_temp = 0
                 sum_i = 0
                 count_temp = 0
-                index = []
+
                 while col_list[i] > 0:
                     count_temp += 1
                     sum_i += i * col_list[i]
@@ -76,7 +76,10 @@ class Frame:
 
             else:
                 i += 1
+        if index.__len__() == 0:
+            return [-1]
         return index
+
 
     # debug1
     def colCal_1(self):
