@@ -6,5 +6,4 @@
 - sensor -> *i2c* -> arduino -> *mqtt* -> rasipi_mqtt_server -> Dectection
 - keyword: amg8833,mqtt,arduino,mlx90641
 
-- 利用窄边 多人 -> 单人
 
