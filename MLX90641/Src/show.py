@@ -23,44 +23,21 @@ matplotlib.use('TkAgg')
 T = Track()
 debug_index_list = []
 
-# fig, ax = plt.subplots()
-# fig1, bx = plt.subplots()
+fig, ax = plt.subplots()
 
 col = np.ones(16)
 for i in range(155, 20000000):
 
-    # ax.cla()
-    # bx.cla()
-
-    # piexls = data01[i]
-
+    ax.cla()
     piexls = receiveMqtt()
     piexls.resize((12, 16))
 
     F = Frame(piexls)
-    if F.index > 0:
-        T.empty = 0
-        if not (F.index_list == T.pointList[-1]):
-            T.pointList.append(F.index_list)
-            print("frame", i, F.index_list)
-    else:
-        T.empty += 1
-
-    if (T.empty >= 10) and (T.pointList.__len__() >= 3):
-        T.judge()
-        T.pointList = [[]]
-        T.empty = 0
-
-
-    # col = F.col_final
-    # col_img = col.copy()
-    # col_img.resize(1, 16)
-    #
-    # ax.imshow(col_img, vmin=4, vmax=7)
-    # bx.imshow(piexls)
-
-    # ax.set_title("frame {}".format(i))
-    # bx.set_title("piexls {}".format(i))
-    # plt.pause(0.01)
+    col = F.col_final
+    col_img = col.copy()
+    col_img.resize(1, 16)
+    ax.imshow(col_img, vmin=4, vmax=7)
+    ax.set_title("frame {}".format(i))
+    plt.pause(0.01)
 
 print(debug_index_list)

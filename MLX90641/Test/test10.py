@@ -6,7 +6,7 @@ import paho.mqtt.subscribe as subscribe
 
 np.random.seed(19971111)
 data = np.random.random((100000, 64))
-data01 = np.load("../Dataset/data01.npy")
+# data01 = np.load("../Dataset/data01.npy")
 
 
 def receiveMqtt():
@@ -29,7 +29,7 @@ for i in range(100000):
     piexls = receiveMqtt()
     piexls.resize(12, 16)
     # piexls = piexls[2:10, :]
-    print(piexls.max(), " ", piexls.min(), " ", "温差：", piexls.max() - piexls.min(), "平均：", np.mean(piexls))
+    # print(piexls.max(), " ", piexls.min(), " ", "温差：", piexls.max() - piexls.min(), "平均：", np.mean(piexls))
     ax.imshow(piexls, vmin=20, vmax=30)
     # ax.imshow(piexls, cmap="gray", vmin=20, vmax=35)
     # ax.imshow(data[i])

@@ -46,7 +46,7 @@ class Track:
                 if (list[0]>8) and (list[-1]<8) :
                     print(list)
                     count += 1
-            print("出去",count*flag,"人")
+            print("进来",count*flag,"人")
 
         if flag == 1:
             for i in range(array.__len__()):
@@ -73,5 +73,5 @@ class Track:
                 if (list[0] < 8) and (list[-1] > 8):
                     print(list)
                     count += 1
-            print("进来", count * flag, "人")
+            print("出去", count * flag, "人")
 
