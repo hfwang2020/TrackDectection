@@ -121,7 +121,8 @@ class Frame:
                 sum_i += col_list[i]
                 sum_col_i += i * col_list[i]
                 i = i + 1
-            index.append(round((sum_col_i / sum_i), 2))
+            if track_point > 1 and 13 > sum_col_i / sum_i > 2:
+                index.append(round((sum_col_i / sum_i), 2))
         if index.__len__() == 0:
             return [-1]
         else:

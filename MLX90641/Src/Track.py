@@ -21,6 +21,7 @@ class Track:
         if array[1][0] < 8 and array[2][0] < 8:
             flag = 1
         # flag = -1
+        # 14 -> 0
         if flag == -1:
             for i in range(array.__len__()):
                 for point in array[i]:
@@ -34,20 +35,20 @@ class Track:
                     else:
                         a = track_list[-2][-1]
                         b = track_list[-1][-1]
-                        if point <= a:
+                        if point <= a+0.5:
                             track_list[-2].append(point)
-                        elif point <= b:
+                        elif point <= b+0.5:
                             track_list[-1].append(point)
                         else:
                             track_list.append([point])
 
             count = 0
             for list in track_list:
-                if (list[0]>8) and (list[-1]<8) :
+                if (list[0] > 8) and (list[-1] < 8) and (list.__len__() >= 3):
                     print(list)
                     count += 1
-            print("进来",count*flag,"人")
-
+            print("进来", -1 * count * flag, "人")
+        # 0 -> 14
         if flag == 1:
             for i in range(array.__len__()):
                 for point in array[i]:
@@ -61,17 +62,16 @@ class Track:
                     else:
                         a = track_list[-2][-1]
                         b = track_list[-1][-1]
-                        if point >= a:
+                        if point >= a-0.5:
                             track_list[-2].append(point)
-                        elif point >= b:
+                        elif point >= b-0.5:
                             track_list[-1].append(point)
                         else:
                             track_list.append([point])
 
             count = 0
             for list in track_list:
-                if (list[0] < 8) and (list[-1] > 8):
+                if (list[0] < 8) and (list[-1] > 8) and (list.__len__() >= 3):
                     print(list)
                     count += 1
-            print("出去", count * flag, "人")
-
+            print("出去", -1 * count * flag, "人")

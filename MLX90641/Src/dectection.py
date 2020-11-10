@@ -46,11 +46,14 @@ for i in range(155, 20000000):
     else:
         T.empty += 1
 
-    if (T.empty >= 10) and (T.pointList.__len__() >= 3):
+    if (T.empty >= 20) and (T.pointList.__len__() >= 3):
         T.judge()
         T.pointList = [[]]
         T.empty = 0
-
+    if (T.empty >= 40) and (T.pointList.__len__() <= 2):
+        T.pointList = [[]]
+        print(".....clear.....")
+        T.empty = 0
 
     # col = F.col_final
     # col_img = col.copy()
