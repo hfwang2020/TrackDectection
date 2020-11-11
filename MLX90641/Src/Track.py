@@ -16,9 +16,9 @@ class Track:
         flag = 0
         array = self.pointList
         track_list = []
-        if array[1][0] > 7 and array[2][0] > 7:
+        if array[1][0] > 7 :
             flag = -1
-        if array[1][0] < 8 and array[2][0] < 8:
+        if array[1][0] < 7 :
             flag = 1
         # flag = -1
         # 14 -> 0

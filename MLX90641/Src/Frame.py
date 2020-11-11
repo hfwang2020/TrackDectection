@@ -51,7 +51,7 @@ class Frame:
         index = []
         count_above_1 = 0
         for i in range(16):
-            if col_list[i] >= 8:
+            if col_list[i] >= 7.5:
                 count_above_1 += 1
             else:
                 col_list[i] = -1
@@ -86,7 +86,7 @@ class Frame:
         col_mean = self.col_mean
         col = np.ones(16)
         for i in range(16):
-            col[i] = 4 * abs(col_mean[i] - piexls_mean)
+            col[i] = 4 * (col_mean[i] - piexls_mean)
         return col
 
     # debug2 方差
@@ -94,7 +94,7 @@ class Frame:
         piexls1 = self.piexls
         b = np.ones(16)
         for i in range(16):
-            b[i] = round(5 * np.var(piexls1[:, i]), 2)
+            b[i] = round(10 * np.var(piexls1[:, i]), 2)
         return b
 
     def indexCal_3(self):
@@ -121,7 +121,7 @@ class Frame:
                 sum_i += col_list[i]
                 sum_col_i += i * col_list[i]
                 i = i + 1
-            if track_point > 1 and 13 > sum_col_i / sum_i > 2:
+            if track_point > 1 and 12 > sum_col_i / sum_i > 2:
                 index.append(round((sum_col_i / sum_i), 2))
         if index.__len__() == 0:
             return [-1]

@@ -50,7 +50,7 @@ for i in range(155, 20000000):
         T.judge()
         T.pointList = [[]]
         T.empty = 0
-    if (T.empty >= 40) and (T.pointList.__len__() <= 2):
+    if (T.empty >= 100) and (T.pointList.__len__() <= 2):
         T.pointList = [[]]
         print(".....clear.....")
         T.empty = 0
@@ -66,4 +66,4 @@ for i in range(155, 20000000):
     # bx.set_title("piexls {}".format(i))
     # plt.pause(0.01)
 
-print(debug_index_list)
+
