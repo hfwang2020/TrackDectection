@@ -17,18 +17,18 @@ matplotlib.use('TkAgg')
 
 # data01 = np.load("/home/hfwang/Desktop/DeV/VsCoDe/TrackDectection/MLX90641/Dataset/data03.npy")
 # data01 = np.load("../Dataset/data03.npy")
-
 # print(data01.shape)
 
 T = Track()
 debug_index_list = []
 
 fig, ax = plt.subplots()
+fig, bx = plt.subplots()
 
 col = np.ones(16)
-for i in range(155, 20000000):
-
+for i in range(0, 20000000):
     ax.cla()
+    bx.cla()
     piexls = receiveMqtt()
     piexls.resize((12, 16))
 
@@ -37,7 +37,9 @@ for i in range(155, 20000000):
     col_img = col.copy()
     col_img.resize(1, 16)
     ax.imshow(col_img, vmin=4, vmax=7)
+    bx.imshow(piexls, vmin=20, vmax=30)
     ax.set_title("frame {}".format(i))
+    bx.set_title("frame {}".format(i))
     plt.pause(0.01)
 
 print(debug_index_list)

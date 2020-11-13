@@ -19,7 +19,7 @@ def receiveMqtt():
 
 data = np.random.random((1000, 12, 16))
 
-for i in range(1000):
+for i in range(10000):
     piexls = receiveMqtt()
     piexls.resize(12, 16)
     data[i] = piexls
@@ -27,7 +27,7 @@ for i in range(1000):
 
 
 # 单人通过数据
-np.save('../Dataset/data04.npy', data)
+np.save('../Dataset/data05.npy', data)
 
 # 双人通过数据
 # np.save("../Dataset/data02.npy",data)

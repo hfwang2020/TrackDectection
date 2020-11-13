@@ -22,18 +22,22 @@ def receiveMqtt():
 
 fig, ax = plt.subplots()
 
-for i in range(100000):
-    i = 160
-    ax.cla()
-    piexls = data01[i]
-    # piexls = receiveMqtt()
-    # piexls.resize(12, 16)
-    # print(piexls.max()," ",piexls.min()," ","温差：",piexls.max() - piexls.min(),"平均：",np.mean(piexls))
-    ax.imshow(piexls, vmin=20, vmax=30)
-    # ax.imshow(piexls, cmap="gray", vmin=20, vmax=35)
-    # ax.imshow(data[i])
-    ax.set_title("frame {}".format(i))
-    # Note that using time.sleep does *not* work here!
-    plt.pause(0.01)
+np.set_printoptions(threshold=20)
+piexls = data01[15]
+
+print(piexls)
+# for i in range(100000):
+#     i = 160
+#     ax.cla()
+#     piexls = data01[i]
+#     # piexls = receiveMqtt()
+#     # piexls.resize(12, 16)
+#     # print(piexls.max()," ",piexls.min()," ","温差：",piexls.max() - piexls.min(),"平均：",np.mean(piexls))
+#     ax.imshow(piexls, vmin=20, vmax=30)
+#     # ax.imshow(piexls, cmap="gray", vmin=20, vmax=35)
+#     # ax.imshow(data[i])
+#     ax.set_title("frame {}".format(i))
+#     # Note that using time.sleep does *not* work here!
+#     plt.pause(0.01)
 #
 # np.save("data01.npy",data)

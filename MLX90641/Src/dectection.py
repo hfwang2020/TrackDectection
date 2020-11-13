@@ -31,7 +31,6 @@ for i in range(155, 20000000):
 
     # ax.cla()
     # bx.cla()
-
     # piexls = data01[i]
 
     piexls = receiveMqtt()
