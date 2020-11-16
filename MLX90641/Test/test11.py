@@ -6,7 +6,8 @@ import paho.mqtt.subscribe as subscribe
 
 np.random.seed(19971111)
 data = np.random.random((100000, 64))
-data01 = np.load("../Dataset/data03.npy")
+data01 = np.load("../Dataset/data06.npy")
+
 
 def receiveMqtt():
     msg = subscribe.simple("test", hostname="192.168.1.120")
@@ -22,22 +23,18 @@ def receiveMqtt():
 
 fig, ax = plt.subplots()
 
-np.set_printoptions(threshold=20)
-piexls = data01[15]
+# 300 jia come in
+# 1300-1400 in
 
-print(piexls)
-# for i in range(100000):
-#     i = 160
-#     ax.cla()
-#     piexls = data01[i]
-#     # piexls = receiveMqtt()
-#     # piexls.resize(12, 16)
-#     # print(piexls.max()," ",piexls.min()," ","温差：",piexls.max() - piexls.min(),"平均：",np.mean(piexls))
-#     ax.imshow(piexls, vmin=20, vmax=30)
-#     # ax.imshow(piexls, cmap="gray", vmin=20, vmax=35)
-#     # ax.imshow(data[i])
-#     ax.set_title("frame {}".format(i))
-#     # Note that using time.sleep does *not* work here!
-#     plt.pause(0.01)
-#
-# np.save("data01.npy",data)
+for i in range(1100, 1550):
+    ax.cla()
+    piexls = data01[i]
+    # piexls = receiveMqtt()
+    # piexls.resize(12, 16)
+    # print(piexls.max()," ",piexls.min()," ","温差：",piexls.max() - piexls.min(),"平均：",np.mean(piexls))
+    ax.imshow(piexls, vmin=23, vmax=28)
+    # ax.imshow(piexls, cmap="gray", vmin=20, vmax=35)
+    # ax.imshow(data[i])
+    ax.set_title("frame {}".format(i))
+    # Note that using time.sleep does *not* work here!
+    plt.pause(0.01)

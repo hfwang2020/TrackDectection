@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import paho.mqtt.subscribe as subscribe
 
-data01 = np.load("../Dataset/data01.npy")
+data01 = np.load("../Dataset/data06.npy")
 
 
 def receiveMqtt():

@@ -17,17 +17,19 @@ def receiveMqtt():
     return piexls1
 
 
-data = np.random.random((1000, 12, 16))
+data = np.random.random((10000, 12, 16))
 
 for i in range(10000):
+    time_start = time.time()
     piexls = receiveMqtt()
     piexls.resize(12, 16)
     data[i] = piexls
     time.sleep(0.05)
-
+    time_finish = time.time()
+    print("frame", i, piexls[:, 1], "Frequency", 1 / (time_finish - time_start))
 
 # 单人通过数据
-np.save('../Dataset/data05.npy', data)
+np.save('../Dataset/data06.npy', data)
 
 # 双人通过数据
 # np.save("../Dataset/data02.npy",data)
