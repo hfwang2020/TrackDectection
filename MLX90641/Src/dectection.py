@@ -23,13 +23,15 @@ data01 = np.load("../Dataset/data06.npy")
 T = Track()
 debug_index_list = []
 
-fig, ax = plt.subplots()
+# fig, ax = plt.subplots()
 # fig1, bx = plt.subplots()
 
 col = np.ones(16)
-for i in range(1200, 1500):
+i = 1300
 
-    ax.cla()
+while (i<1500):
+    i += 1
+    # ax.cla()
     # bx.cla()
     piexls = data01[i]
 
@@ -39,6 +41,8 @@ for i in range(1200, 1500):
     F = Frame(piexls)
     if F.index > 0:
         T.empty = 0
+        # 当此时有人列坐标列表跟上一帧不一样时往T.pointList里面插入index_list
+        #
         if not (F.index_list == T.pointList[-1]):
             T.pointList.append(F.index_list)
             print("frame", i, F.index_list)
@@ -53,16 +57,3 @@ for i in range(1200, 1500):
         T.pointList = [[]]
         print(".....clear.....")
         T.empty = 0
-
-    col = F.col_final
-    col_img = col.copy()
-    col_img.resize(1, 16)
-    #
-    ax.imshow(col_img, vmin=4, vmax=7)
-    # bx.imshow(piexls)
-
-    ax.set_title("frame {}".format(i))
-    # bx.set_title("piexls {}".format(i))
-    plt.pause(0.01)
-
-

@@ -6,20 +6,10 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import paho.mqtt.subscribe as subscribe
-
+from utils import *
 data01 = np.load("../Dataset/data06.npy")
 
 
-def receiveMqtt():
-    msg = subscribe.simple("test", hostname="192.168.1.120")
-    msg = str(msg.payload)
-    msg_list = msg.split(sep=",")
-    msg_list = msg_list[1:193]
-    piexls = []
-    for i in msg_list:
-        piexls.append(float(i))
-    piexls1 = np.array(piexls)
-    return piexls1
 
 
 class Frame():
@@ -132,7 +122,7 @@ T = Track()
 
 fig, ax = plt.subplots()
 col = np.ones(16)
-for i in range(250, 10000):
+for i in range(1300, 10000):
     ax.cla()
     piexls = data01[i]
     # piexls = receiveMqtt()
@@ -142,7 +132,7 @@ for i in range(250, 10000):
         if not (F.index == T.pointList[-1]):
             T.pointList.append(F.index)
             T.judge()
-            print(T.pointList, "\t", "diff: ", T.diff)
+            # print(T.pointList, "\t", "diff: ", T.diff)
 
     col = F.col_diff
     col_img = col.copy()
@@ -153,6 +143,6 @@ for i in range(250, 10000):
     # ax.imshow(data[i])
     ax.set_title("frame {}".format(i))
     # Note that using time.sleep does *not* work here!
-    plt.pause(0.2)
+    plt.pause(0.1)
 #
 # np.save("data01.npy",data)

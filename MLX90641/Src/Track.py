@@ -9,7 +9,7 @@ class Track:
         self.num = 0
         self.diff = 0
         self.empty = 0
-        # 室内人数
+
 
     def judge(self):
         print("judge running")
